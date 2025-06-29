@@ -38,7 +38,6 @@ KCM.SimpleKCM {
     property alias cfg_alignResultsToBottom: alignResultsToBottom.checked
 
     property alias cfg_appsIconSize: appsIconSize.currentIndex
-    property alias cfg_favsIconSize: favsIconSize.currentIndex
     property alias cfg_systemIconSize: systemIconSize.currentIndex
 
     Kirigami.FormLayout {
@@ -225,14 +224,8 @@ KCM.SimpleKCM {
         }
 
         ComboBox {
-            id: favsIconSize
-            Kirigami.FormData.label: i18n("Favs icon size:")
-            model: [i18n("Small"),i18n("Medium"),i18n("Large"), i18n("Huge"),i18n("Enormous")]
-        }
-
-        ComboBox {
             id: systemIconSize
-            Kirigami.FormData.label: i18n("Favs icon size:")
+            Kirigami.FormData.label: i18n("System icons size:")
             model: [i18n("Small"),i18n("Medium"),i18n("Large"), i18n("Huge"),i18n("Enormous")]
         }
     }
