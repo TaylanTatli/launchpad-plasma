@@ -299,11 +299,6 @@ Kicker.DashboardWindow {
                         allAppsGrid.focus = false
                         searchField.focus = true
                     }
-                    onKeyNavDown: {
-                        allAppsGrid.focus = false
-                        systemFavoritesGrid.tryActivate(0,0)
-                        systemFavoritesGrid.forceActiveFocus()
-                    }
                     Keys.onPressed: event => {
                                         if (event.key === Qt.Key_Tab) {
                                             event.accepted = true;
@@ -368,11 +363,6 @@ Kicker.DashboardWindow {
                     runnerGrid.focus = false
                     searchField.focus = true
                 }
-                onKeyNavDown: {
-                    runnerGrid.focus = false
-                    systemFavoritesGrid.tryActivate(0,0)
-                    systemFavoritesGrid.forceActiveFocus()
-                }
                 Keys.onPressed: event => {
                                     if (event.key === Qt.Key_Tab) {
                                         event.accepted = true;
@@ -385,7 +375,6 @@ Kicker.DashboardWindow {
 
         }
 
-        // Sistem butonları için arka plan
         Rectangle{
             anchors.centerIn: systemFavoritesGrid
             height: systemFavoritesGrid.height + Kirigami.Units.largeSpacing
