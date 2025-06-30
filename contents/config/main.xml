@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
-      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <kcfgfile name=""/>
 
   <group name="General">
@@ -36,17 +35,9 @@
       <label>How should the previously used apps/docs be ordered: 0 = RecentFirst, 1 = PopularFirst</label>
       <default>0</default>
     </entry>
-    <entry name="favoriteApps" type="StringList">
-      <label>List of general favorites. Supported values are menu id's (usually .desktop file names), special URLs that expand into default applications (e.g. preferred://browser), document URLs and KPeople contact URIs.</label>
-      <default>preferred://browser,org.kde.kontact.desktop,systemsettings.desktop,org.kde.dolphin.desktop,org.kde.discover</default>
-    </entry>
     <entry name="favoriteSystemActions" type="StringList">
       <label>List of system action favorites.</label>
       <default>shutdown,reboot,logout,lock-screen</default>
-    </entry>
-    <entry name="favoritesPortedToKAstats" type="Bool">
-      <label>Are the favorites ported to use KActivitiesStats to allow per-activity favorites</label>
-      <default>false</default>
     </entry>
     <entry name="hiddenApplications" type="StringList">
       <label>List of menu id's (usually .desktop file names) of apps that should not be shown in the menu.</label>
@@ -77,17 +68,17 @@
     <entry name="showIconsRootLevel" type="Bool">
       <label>Whether to show icons on the root level of the menu.</label>
       <default>false</default>
-    </entry>    
+    </entry>
     <entry name="appsIconSize" type="Enum">
       <label></label>
       <default>3</default>
     </entry>
-    <entry name="favsIconSize" type="Enum">
-      <label></label>
-      <default>2</default>
-    </entry>
     <entry name="systemIconSize" type="Enum">
       <label></label>
+      <default>1</default>
+    </entry>
+    <entry name="showSystemIcons" type="Enum">
+      <label>Whether to show system action icons (shutdown, reboot, logout, etc.) at the bottom of the launcher: 0 = Hide, 1 = Show</label>
       <default>1</default>
     </entry>
 

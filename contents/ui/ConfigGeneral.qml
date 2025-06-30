@@ -39,6 +39,7 @@ KCM.SimpleKCM {
 
     property alias cfg_appsIconSize: appsIconSize.currentIndex
     property alias cfg_systemIconSize: systemIconSize.currentIndex
+    property alias cfg_showSystemIcons: showSystemIcons.currentIndex
 
     Kirigami.FormLayout {
         anchors.left: parent.left
@@ -227,6 +228,12 @@ KCM.SimpleKCM {
             id: systemIconSize
             Kirigami.FormData.label: i18n("System icons size:")
             model: [i18n("Small"),i18n("Medium"),i18n("Large"), i18n("Huge"),i18n("Enormous")]
+        }
+
+        ComboBox {
+            id: showSystemIcons
+            Kirigami.FormData.label: i18n("System Actions:")
+            model: [i18n("Hide"), i18n("Show")]
         }
     }
 }

@@ -91,25 +91,6 @@ PlasmoidItem {
         onRecentOrderingChanged: {
             Plasmoid.configuration.recentOrdering = recentOrdering;
         }
-
-        Component.onCompleted: {
-            favoritesModel.initForClient("org.kde.plasma.kicker.favorites.instance-" + Plasmoid.id)
-
-            if (!Plasmoid.configuration.favoritesPortedToKAstats) {
-                if (favoritesModel.count < 1) {
-                    favoritesModel.portOldFavorites(Plasmoid.configuration.favoriteApps);
-                }
-                Plasmoid.configuration.favoritesPortedToKAstats = true;
-            }
-        }
-    }
-
-    Connections {
-        target: globalFavorites
-
-        function onFavoritesChanged() {
-            Plasmoid.configuration.favoriteApps = target.favorites;
-        }
     }
 
     Connections {
@@ -122,10 +103,6 @@ PlasmoidItem {
 
     Connections {
         target: Plasmoid.configuration
-
-        function onFavoriteAppsChanged() {
-            globalFavorites.favorites = Plasmoid.configuration.favoriteApps;
-        }
 
         function onFavoriteSystemActionsChanged() {
             systemFavorites.favorites = Plasmoid.configuration.favoriteSystemActions;

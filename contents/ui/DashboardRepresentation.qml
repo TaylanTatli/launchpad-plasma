@@ -303,8 +303,12 @@ Kicker.DashboardWindow {
                                         if (event.key === Qt.Key_Tab) {
                                             event.accepted = true;
                                             allAppsGrid.focus = false
-                                            systemFavoritesGrid.tryActivate(0,0)
-                                            systemFavoritesGrid.forceActiveFocus()
+                                            if (Plasmoid.configuration.showSystemIcons === 1) {
+                                                systemFavoritesGrid.tryActivate(0,0)
+                                                systemFavoritesGrid.forceActiveFocus()
+                                            } else {
+                                                searchField.focus = true
+                                            }
                                         }
                                     }
                 }
@@ -367,8 +371,12 @@ Kicker.DashboardWindow {
                                     if (event.key === Qt.Key_Tab) {
                                         event.accepted = true;
                                         runnerGrid.focus = false
-                                        systemFavoritesGrid.tryActivate(0,0)
-                                        systemFavoritesGrid.forceActiveFocus()
+                                        if (Plasmoid.configuration.showSystemIcons === 1) {
+                                            systemFavoritesGrid.tryActivate(0,0)
+                                            systemFavoritesGrid.forceActiveFocus()
+                                        } else {
+                                            searchField.focus = true
+                                        }
                                     }
                                 }
             }
@@ -383,10 +391,12 @@ Kicker.DashboardWindow {
             radius: 10
             opacity: 0.6
             z:1
+            visible: Plasmoid.configuration.showSystemIcons === 1
         }
 
         ItemGridView {
             id: systemFavoritesGrid
+            visible: Plasmoid.configuration.showSystemIcons === 1
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Kirigami.Units.largeSpacing
             anchors.horizontalCenter: parent.horizontalCenter
