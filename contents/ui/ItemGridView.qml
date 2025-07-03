@@ -189,7 +189,8 @@ FocusScope {
 
             currentIndex: -1
 
-            snapMode: GridView.SnapOneRow
+            snapMode: GridView.NoSnap
+            boundsBehavior: Flickable.StopAtBounds
             move: Transition {
                 enabled: itemGrid.dropEnabled
 
@@ -223,7 +224,6 @@ FocusScope {
             }
 
             keyNavigationWraps: false
-            boundsBehavior: Flickable.StopAtBounds
 
             delegate: ItemGridDelegate {
                 showLabel: itemGrid.showLabels

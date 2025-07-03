@@ -68,6 +68,28 @@ Kicker.DashboardWindow {
     property int maxRows: Plasmoid.configuration.useCustomGridSize ? 
                          Plasmoid.configuration.gridRows : 
                          Math.floor(height / cellSize)
+    
+    // Gerçekte gösterilecek satır sayısı - kullanıcı seçimi ile fiziksel sınır arasında minimum
+    property int actualRows: Plasmoid.configuration.useCustomGridSize ? 
+                            Math.min(Plasmoid.configuration.gridRows, Math.floor(height*0.7 / cellSize)) :
+                            Math.floor(height*0.7 / cellSize)
+    
+    // Gerçekte gösterilecek sütun sayısı - kullanıcı seçimi ile fiziksel sınır arasında minimum
+    property int actualColumns: Plasmoid.configuration.useCustomGridSize ? 
+                               Math.min(Plasmoid.configuration.gridColumns, Math.floor(width*0.7 / cellSize)) :
+                               Math.floor(width*0.7 / cellSize)
+    
+    // Model boyutuna göre gerçekte gerekli olan satır sayısı
+    property int neededRows: {
+        if (allAppsGrid.model && allAppsGrid.model.count > 0) {
+            return Math.ceil(allAppsGrid.model.count / actualColumns);
+        }
+        return actualRows; // Model henüz yüklenmemişse varsayılan değer
+    }
+    
+    // Gerçekte gösterilecek satır sayısı - kullanıcı seçimi, fiziksel sınır ve model boyutunun minimumu
+    property int finalRows: Math.max(1, Math.min(actualRows, neededRows))
+    
     property bool searching: searchField.text !== ""
 
     //keyEventProxy: searchField
@@ -210,8 +232,8 @@ Kicker.DashboardWindow {
         TextField{
             id: searchField
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: mainView.top
-            anchors.bottomMargin: Kirigami.Units.largeSpacing * 6
+            anchors.top: parent.top
+            anchors.topMargin: Kirigami.Units.largeSpacing * 6
             //focus: true
             width: Kirigami.Units.gridUnit * 13
             topPadding: Kirigami.Units.largeSpacing
@@ -280,28 +302,35 @@ Kicker.DashboardWindow {
 
         StackView {
             id: mainView
-            width: (root.columns * root.cellSize) + Kirigami.Units.gridUnit
-            height: Math.ceil(root.height*0.7/root.cellSize) * root.cellSize
+            width: (root.actualColumns * root.cellSize) + Kirigami.Units.largeSpacing
+            height: (root.finalRows * root.cellSize) + Kirigami.Units.largeSpacing * 2
             anchors{
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
+                verticalCenterOffset: (searchField.height + searchField.anchors.topMargin) / 2 - 
+                                     (Plasmoid.configuration.showSystemIcons === 1 ? 
+                                      (systemFavoritesGrid.height + systemFavoritesGrid.anchors.bottomMargin) / 2 : 0)
             }
 
             initialItem:           Column {
                 id: allAppsColumn
                 clip: true
-                spacing: Kirigami.Units.largeSpacing * 2
+                spacing: Kirigami.Units.largeSpacing
+                anchors.centerIn: parent
 
                 ItemGridView {
                     id: allAppsGrid
-                    width: parent.width
-                    height: Plasmoid.configuration.useCustomGridSize ? 
-                           (maxRows * root.cellSize) : 
-                           (Math.ceil(root.height*0.7/cellHeight) * cellHeight)
+                    width: root.actualColumns * root.cellSize
+                    height: root.finalRows * root.cellSize
                     cellWidth: root.cellSize
                     cellHeight: root.cellSize
                     iconSize: root.iconSize
                     dropEnabled: false
+                    verticalScrollBarPolicy: (model && model.count > finalRows * actualColumns) ? 
+                                           PlasmaComponents.ScrollBar.AsNeeded : 
+                                           PlasmaComponents.ScrollBar.AlwaysOff
+                    horizontalScrollBarPolicy: PlasmaComponents.ScrollBar.AlwaysOff
+                    clip: true
 
                     onKeyNavUp: {
                         allAppsGrid.focus = false
@@ -406,7 +435,7 @@ Kicker.DashboardWindow {
             id: systemFavoritesGrid
             visible: Plasmoid.configuration.showSystemIcons === 1
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: Kirigami.Units.largeSpacing
+            anchors.bottomMargin: Kirigami.Units.largeSpacing * 3
             anchors.horizontalCenter: parent.horizontalCenter
             clip: true
             width: systemFavoritesGrid.model ? Math.min(Math.floor((root.width*0.85)/cellWidth)*cellWidth, systemFavoritesGrid.model.count*cellWidth) : 0
