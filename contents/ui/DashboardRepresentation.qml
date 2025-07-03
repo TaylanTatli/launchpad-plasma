@@ -233,7 +233,7 @@ Kicker.DashboardWindow {
             id: searchField
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            anchors.topMargin: Kirigami.Units.largeSpacing * 6
+            anchors.topMargin: Kirigami.Units.largeSpacing * 8
             //focus: true
             width: Kirigami.Units.gridUnit * 13
             topPadding: Kirigami.Units.largeSpacing
@@ -435,7 +435,7 @@ Kicker.DashboardWindow {
             id: systemFavoritesGrid
             visible: Plasmoid.configuration.showSystemIcons === 1
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: Kirigami.Units.largeSpacing * 3
+            anchors.bottomMargin: Kirigami.Units.largeSpacing
             anchors.horizontalCenter: parent.horizontalCenter
             clip: true
             width: systemFavoritesGrid.model ? Math.min(Math.floor((root.width*0.85)/cellWidth)*cellWidth, systemFavoritesGrid.model.count*cellWidth) : 0
