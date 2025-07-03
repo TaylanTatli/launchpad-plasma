@@ -6,6 +6,7 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 import org.kde.draganddrop 2.0 as DragDrop
 import org.kde.kirigami 2.5 as Kirigami
@@ -15,6 +16,7 @@ import org.kde.kirigami 2.20 as Kirigami
 import org.kde.ksvg 1.0 as KSvg
 import org.kde.plasma.plasmoid 2.0
 import org.kde.kcmutils as KCM
+import org.kde.kquickcontrols 2.0 as KQuickControls
 
 KCM.SimpleKCM {
     id: configGeneral
@@ -45,6 +47,8 @@ KCM.SimpleKCM {
     property alias cfg_gridRows: gridRows.value
     property alias cfg_useCustomGridSize: useCustomGridSize.checked
     property alias cfg_backgroundOpacity: backgroundOpacity.value
+    property alias cfg_useCustomBackgroundColor: useCustomBackgroundColor.checked
+    property string cfg_customBackgroundColor: Plasmoid.configuration.customBackgroundColor
 
     Kirigami.FormLayout {
         anchors.left: parent.left
@@ -277,19 +281,56 @@ KCM.SimpleKCM {
             Kirigami.FormData.label: i18n("Appearance")
         }
 
-        Slider {
-            id: backgroundOpacity
+        RowLayout {
             Kirigami.FormData.label: i18n("Background transparency:")
-            from: 0.0
-            to: 1.0
-            value: 0.4
-            stepSize: 0.1
+            Layout.fillWidth: true
             
-            // Value indicator
-            ToolTip {
-                parent: backgroundOpacity.handle
-                visible: backgroundOpacity.pressed
+            Slider {
+                id: backgroundOpacity
+                Layout.fillWidth: true
+                from: 0.0
+                to: 1.0
+                value: 0.4
+                stepSize: 0.01
+                
+                ToolTip {
+                    parent: backgroundOpacity.handle
+                    visible: backgroundOpacity.pressed
+                    text: Math.round(backgroundOpacity.value * 100) + "%"
+                }
+            }
+            
+            Label {
                 text: Math.round(backgroundOpacity.value * 100) + "%"
+                color: Kirigami.Theme.disabledTextColor
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+            }
+        }
+
+        CheckBox {
+            id: useCustomBackgroundColor
+            Kirigami.FormData.label: i18n("Background color:")
+            text: i18n("Use custom background color")
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            visible: useCustomBackgroundColor.checked
+            
+            Label {
+                text: i18n("Custom Color:")
+            }
+            KQuickControls.ColorButton {
+                id: backgroundColorPicker
+                dialogTitle: i18n("Background Color")
+                showAlphaChannel: true
+                onAccepted: {
+                    configGeneral.cfg_customBackgroundColor = color
+                }
+                Component.onCompleted: {
+                    color = configGeneral.cfg_customBackgroundColor
+                }
             }
         }
     }

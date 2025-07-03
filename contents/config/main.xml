@@ -101,6 +101,14 @@
       <min>0.0</min>
       <max>1.0</max>
     </entry>
+    <entry name="useCustomBackgroundColor" type="Bool">
+      <label>Whether to use a custom background color instead of the theme default</label>
+      <default>false</default>
+    </entry>
+    <entry name="customBackgroundColor" type="Color">
+      <label>Custom background color</label>
+      <default>#3F4557</default>
+    </entry>
 
   </group>
 </kcfg>
