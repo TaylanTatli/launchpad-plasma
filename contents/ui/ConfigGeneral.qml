@@ -44,6 +44,7 @@ KCM.SimpleKCM {
     property alias cfg_gridColumns: gridColumns.value
     property alias cfg_gridRows: gridRows.value
     property alias cfg_useCustomGridSize: useCustomGridSize.checked
+    property alias cfg_backgroundOpacity: backgroundOpacity.value
 
     Kirigami.FormLayout {
         anchors.left: parent.left
@@ -269,6 +270,27 @@ KCM.SimpleKCM {
             to: 20
             value: 4
             stepSize: 1
+        }
+
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Appearance")
+        }
+
+        Slider {
+            id: backgroundOpacity
+            Kirigami.FormData.label: i18n("Background transparency:")
+            from: 0.0
+            to: 1.0
+            value: 0.4
+            stepSize: 0.1
+            
+            // Value indicator
+            ToolTip {
+                parent: backgroundOpacity.handle
+                visible: backgroundOpacity.pressed
+                text: Math.round(backgroundOpacity.value * 100) + "%"
+            }
         }
     }
 }

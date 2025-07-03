@@ -95,5 +95,12 @@
       <default>false</default>
     </entry>
 
+    <entry name="backgroundOpacity" type="Double">
+      <label>Background transparency (0.0 = fully transparent, 1.0 = fully opaque)</label>
+      <default>0.4</default>
+      <min>0.0</min>
+      <max>1.0</max>
+    </entry>
+
   </group>
 </kcfg>
