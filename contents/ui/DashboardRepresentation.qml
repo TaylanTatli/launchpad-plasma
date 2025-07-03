@@ -60,7 +60,6 @@ Kicker.DashboardWindow {
                            + (2 * Kirigami.Units.largeSpacing)
                            + (2 * Math.max(highlightItemSvg.margins.top + highlightItemSvg.margins.bottom,
                                            highlightItemSvg.margins.left + highlightItemSvg.margins.right))
-    //property int columns: Math.floor(width*0.7/root.cellSize)//  Math.floor(((smallScreen ? 85 : 80)/100) * Math.ceil(width / cellSize))
     property int columns: Plasmoid.configuration.useCustomGridSize ? 
                          Plasmoid.configuration.gridColumns : 
                          Math.floor(((smallScreen ? 85 : 80)/100) * Math.ceil(width / cellSize))
@@ -68,26 +67,22 @@ Kicker.DashboardWindow {
     property int maxRows: Plasmoid.configuration.useCustomGridSize ? 
                          Plasmoid.configuration.gridRows : 
                          Math.floor(height / cellSize)
-    
-    // Gerçekte gösterilecek satır sayısı - kullanıcı seçimi ile fiziksel sınır arasında minimum
+
     property int actualRows: Plasmoid.configuration.useCustomGridSize ? 
                             Math.min(Plasmoid.configuration.gridRows, Math.floor(height*0.7 / cellSize)) :
                             Math.floor(height*0.7 / cellSize)
-    
-    // Gerçekte gösterilecek sütun sayısı - kullanıcı seçimi ile fiziksel sınır arasında minimum
+
     property int actualColumns: Plasmoid.configuration.useCustomGridSize ? 
                                Math.min(Plasmoid.configuration.gridColumns, Math.floor(width*0.7 / cellSize)) :
                                Math.floor(width*0.7 / cellSize)
-    
-    // Model boyutuna göre gerçekte gerekli olan satır sayısı
+
     property int neededRows: {
         if (allAppsGrid.model && allAppsGrid.model.count > 0) {
             return Math.ceil(allAppsGrid.model.count / actualColumns);
         }
-        return actualRows; // Model henüz yüklenmemişse varsayılan değer
+        return actualRows;
     }
     
-    // Gerçekte gösterilecek satır sayısı - kullanıcı seçimi, fiziksel sınır ve model boyutunun minimumu
     property int finalRows: Math.max(1, Math.min(actualRows, neededRows))
     
     property bool searching: searchField.text !== ""
@@ -391,8 +386,8 @@ Kicker.DashboardWindow {
 
             ItemGridView {
                 id: runnerGrid
-                anchors.horizontalCenter: mainView.horizontalCenter
-                width: mainView.width/2
+                anchors.centerIn: parent
+                width: mainView.width
                 clip: true
                 height: mainView.height
                 grabFocus: true
