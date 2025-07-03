@@ -41,6 +41,10 @@ KCM.SimpleKCM {
     property alias cfg_systemIconSize: systemIconSize.currentIndex
     property alias cfg_showSystemIcons: showSystemIcons.currentIndex
 
+    property alias cfg_gridColumns: gridColumns.value
+    property alias cfg_gridRows: gridRows.value
+    property alias cfg_useCustomGridSize: useCustomGridSize.checked
+
     Kirigami.FormLayout {
         anchors.left: parent.left
         anchors.right: parent.right
@@ -234,6 +238,37 @@ KCM.SimpleKCM {
             id: showSystemIcons
             Kirigami.FormData.label: i18n("System Actions:")
             model: [i18n("Hide"), i18n("Show")]
+        }
+
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Grid Layout Settings")
+        }
+
+        CheckBox {
+            id: useCustomGridSize
+            Kirigami.FormData.label: i18n("Grid Layout:")
+            text: i18n("Use custom grid size")
+        }
+
+        SpinBox {
+            id: gridColumns
+            enabled: useCustomGridSize.checked
+            Kirigami.FormData.label: i18n("Columns:")
+            from: 1
+            to: 20
+            value: 6
+            stepSize: 1
+        }
+
+        SpinBox {
+            id: gridRows
+            enabled: useCustomGridSize.checked
+            Kirigami.FormData.label: i18n("Rows:")
+            from: 1
+            to: 20
+            value: 4
+            stepSize: 1
         }
     }
 }

@@ -61,7 +61,13 @@ Kicker.DashboardWindow {
                            + (2 * Math.max(highlightItemSvg.margins.top + highlightItemSvg.margins.bottom,
                                            highlightItemSvg.margins.left + highlightItemSvg.margins.right))
     //property int columns: Math.floor(width*0.7/root.cellSize)//  Math.floor(((smallScreen ? 85 : 80)/100) * Math.ceil(width / cellSize))
-    property int columns: Math.floor(((smallScreen ? 85 : 80)/100) * Math.ceil(width / cellSize))
+    property int columns: Plasmoid.configuration.useCustomGridSize ? 
+                         Plasmoid.configuration.gridColumns : 
+                         Math.floor(((smallScreen ? 85 : 80)/100) * Math.ceil(width / cellSize))
+    
+    property int maxRows: Plasmoid.configuration.useCustomGridSize ? 
+                         Plasmoid.configuration.gridRows : 
+                         Math.floor(height / cellSize)
     property bool searching: searchField.text !== ""
 
     //keyEventProxy: searchField
@@ -289,7 +295,9 @@ Kicker.DashboardWindow {
                 ItemGridView {
                     id: allAppsGrid
                     width: parent.width
-                    height: Math.ceil(root.height*0.7/cellHeight) * cellHeight
+                    height: Plasmoid.configuration.useCustomGridSize ? 
+                           (maxRows * root.cellSize) : 
+                           (Math.ceil(root.height*0.7/cellHeight) * cellHeight)
                     cellWidth: root.cellSize
                     cellHeight: root.cellSize
                     iconSize: root.iconSize

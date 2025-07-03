@@ -82,5 +82,18 @@
       <default>1</default>
     </entry>
 
+    <entry name="gridColumns" type="Int">
+      <label>Number of columns in the grid layout</label>
+      <default>6</default>
+    </entry>
+    <entry name="gridRows" type="Int">
+      <label>Number of rows in the grid layout</label>
+      <default>4</default>
+    </entry>
+    <entry name="useCustomGridSize" type="Bool">
+      <label>Whether to use custom grid size instead of automatic sizing</label>
+      <default>false</default>
+    </entry>
+
   </group>
 </kcfg>

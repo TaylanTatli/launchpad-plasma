@@ -12,7 +12,7 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kirigami 2.20 as Kirigami
 import org.kde.plasma.private.kicker 0.1 as Kicker
 
-PlasmaComponents.ScrollView {
+Item {
     id: itemMultiGrid
 
     anchors {
@@ -74,21 +74,30 @@ PlasmaComponents.ScrollView {
     Flickable {
         id: flickable
 
+        anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
         contentHeight: itemColumn.implicitHeight
-        //focusPolicy: Qt.NoFocus
-
+        boundsBehavior: Flickable.StopAtBounds
+        
         Column {
             id: itemColumn
 
-            width: itemMultiGrid.width - Kirigami.Units.gridUnit
+            width: itemMultiGrid.width
 
             Repeater {
                 id: repeater
 
                 delegate: Item {
-                    width: itemColumn.width - Kirigami.Units.gridUnit
-                    height: headerHeight + gridView.height + (index == repeater.count - 1 ? 0 : footerHeight)
+                    width: itemColumn.width
+                    height: {
+                        var gridHeight = 0;
+                        if (gridView.count > 0) {
+                            var columns = Math.floor(itemColumn.width / cellSize);
+                            var rows = Math.ceil(gridView.count / columns);
+                            gridHeight = rows * cellSize;
+                        }
+                        return headerHeight + gridHeight + (index == repeater.count - 1 ? Kirigami.Units.largeSpacing : footerHeight);
+                    }
 
                     property int headerHeight: (gridViewLabel.height
                         + gridViewLabelUnderline.height + Kirigami.Units.gridUnit)
@@ -122,7 +131,7 @@ PlasmaComponents.ScrollView {
 
                         anchors.top: gridViewLabel.bottom
 
-                        width: parent.width - Kirigami.Units.gridUnit
+                        width: parent.width
                         height: lineSvg.horLineHeight
 
                         svg: lineSvg
@@ -145,7 +154,12 @@ PlasmaComponents.ScrollView {
                         }
 
                         width: parent.width
-                        height: Math.ceil(count / Math.floor(width / cellSize)) * cellSize
+                        height: {
+                            if (count === 0) return 0;
+                            var columns = Math.floor(parent.width / cellSize);
+                            var rows = Math.ceil(count / columns);
+                            return rows * cellSize;
+                        }
 
                         cellWidth: cellSize
                         cellHeight: cellSize

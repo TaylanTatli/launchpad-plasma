@@ -189,10 +189,6 @@ FocusScope {
 
             currentIndex: -1
 
-            ScrollBar.vertical: ScrollBar {
-                snapMode: ScrollBar.SnapAlways
-            }
-
             snapMode: GridView.SnapOneRow
             move: Transition {
                 enabled: itemGrid.dropEnabled
@@ -362,7 +358,7 @@ FocusScope {
         MouseArea {
             id: hoverArea
 
-            width: itemGrid.width - Kirigami.Units.gridUnit
+            width: itemGrid.width
             height: itemGrid.height
             //anchors.fill: parent
 
